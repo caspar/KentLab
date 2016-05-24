@@ -5,12 +5,18 @@ import math
 from datetime import datetime
 import os
 
+# handle args
+if (len(sys.argv) == 0):
+    print('include filename!!!')
+else:
+    FILENAME = sys.argv[0]
+
 # load csv file
 PATH = "./data/"
-FILENAME = "Sample_F5_21_2_1mA_trial2";
+# FILENAME = "Sample_F5_21_2_1mA_trial2";
 TIMESTAMP = datetime.now().strftime('%D_%H:%M')
-OUTPUT = ''+ os.path.splitext(FILENAME)[0] + '_' + TIMESTAMP + '.png'
-field, resistance = np.loadtxt((PATH+FILENAME), skiprows=0 , unpack=True, delimiter='	');
+OUTPUT = ''+ os.path.split(FILENAME)[1] + '_' + TIMESTAMP + '.png'
+field, resistance = np.loadtxt((FILENAME), skiprows=0 , unpack=True, delimiter='	');
 
 print(OUTPUT)
 
