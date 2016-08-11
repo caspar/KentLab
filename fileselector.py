@@ -7,15 +7,19 @@ import math
 from datetime import datetime
 import os
     #naming conventions
-Dict = {'y':1,'Y':1,'n':0,'N':0,'':0,'g':1,'G':1,'l':0,'L':0}
+Dict = {'y':1,'Y':1,'n':0,'N':0,'':0,'g':1,'G':1,'l':0,'L':0, 'c':2, 'C':2, 'R':3, 'r':3}
 color = {1:'red',2:'green',3:'blue',4:'orange'}
 evens = {'1':1,'2':1,'3':2,'4':2}
-Local = Dict[raw_input('Graham\'s Computer or Lab: G/L? ')]
+Local = raw_input('Graham\'s Computer or Lab, Caspar\'s, or relative path: G/L/C/R? ')
 ResTitle = {1:'Log of Resistance (ln[ohms])',0:'Resistance (Ohms)'}
-if Local == 1:
+if Local == 'g' or Local == 'G':
     Location = 'C:\\Users\\Graham\\OneDrive\\LabData\\KentLab\\data'
-elif Local == 0:
+elif Local == 'l' or Local == 'L':
     Location = 'C:\\Users\\KentLab\\Desktop\\caspar\\data'
+elif Local == 'c' or Local == 'C':
+    Location = './data'
+else:
+    Location = Local
 sample = 1
 while sample == 1:
     title = 'Magnetoresistance in F5 Nanopillar Sample '
@@ -34,7 +38,7 @@ while sample == 1:
         if compare == 1:
                 #Data Grab
             j = raw_input('trial # ')
-            field, resistance = np.loadtxt((Location+'\\Sample_F5_'+DyeX+'_'+DyeY+'_'+Current+'mA_trial'+j+'.txt'), skiprows=0 , unpack=True, delimiter='\t')
+            field, resistance = np.loadtxt((Location+'/Sample_F5_'+DyeX+'_'+DyeY+'_'+Current+'mA_trial'+j), skiprows=0 , unpack=True, delimiter='\t')
                 #separator and plotter (written by Caspar)
             color = []
             array = []
@@ -58,7 +62,7 @@ while sample == 1:
                     #data grab
             j = int(raw_input('first trial # '))
             a = int(raw_input('second trial # '))
-            field, resistance = np.loadtxt((Location+'\\Sample_F5_'+DyeX+'_'+DyeY+'_'+Current+'mA_trial'+str(j)+'.txt'), skiprows=0 , unpack=True, delimiter='\t')
+            field, resistance = np.loadtxt((Location+'/Sample_F5_'+DyeX+'_'+DyeY+'_'+Current+'mA_trial'+str(j)), skiprows=0 , unpack=True, delimiter='\t')
             plt.subplot(2,1,1)
                 #separator and plotter for 1st trial (written by Caspar)
             color = []
@@ -77,7 +81,7 @@ while sample == 1:
             plt.xlabel('Magnetic Field Strength (Tesla)')
             plt.title((title+DyeX+' by '+DyeY+', Trial '+str(j)+', '+str(Current)+'mA'))
 
-            field, resistance = np.loadtxt((Location+'\\Sample_F5_'+DyeX+'_'+DyeY+'_'+Current+'mA_trial'+str(a)+'.txt'), skiprows=0 , unpack=True, delimiter='\t');
+            field, resistance = np.loadtxt((Location+'/Sample_F5_'+DyeX+'_'+DyeY+'_'+Current+'mA_trial'+str(a)), skiprows=0 , unpack=True, delimiter='\t');
             plt.subplot(2,1,2)
                 #Separator and plotter for 2nd trial (written by Caspar)
             color = []
@@ -107,7 +111,7 @@ while sample == 1:
 
                 # Data grab
                 Trial = str(j);
-                field, resistance = np.loadtxt((Location+'\\Sample_F5_'+DyeX+'_'+DyeY+'_'+Current+'mAal'+str(j)+'.txt'), skiprows=0 , unpack=True, delimiter='	 ');
+                field, resistance = np.loadtxt((Location+'/Sample_F5_'+DyeX+'_'+DyeY+'_'+Current+'mA_trial'+str(j)), skiprows=0 , unpack=True, delimiter='	 ');
                 PlotNum = 2*(j-first)+1
                 PlotH = 2*(last-first)+1
                 plt.subplot(PlotH,1,PlotNum)
@@ -136,7 +140,7 @@ while sample == 1:
         elif compare == 4 or 5:
                 #Data Grab
                 j = raw_input('trial # ')
-                field, resistance = np.loadtxt((Location+'\\Sample_F5_'+DyeX+'_'+DyeY+'_'+Current+'mAal'+j+'.txt'), skiprows=0 , unpack=True, delimiter='\t')
+                field, resistance = np.loadtxt((Location+'/Sample_F5_'+DyeX+'_'+DyeY+'_'+Current+'mA_trial'+j), skiprows=0 , unpack=True, delimiter='\t')
                 i = 0
                 UpField = []
                 DownField = []
